@@ -1,7 +1,29 @@
+/******************************************************************************
+ * Project Name: Task2_Control_PWM_with_buttons
+ * File Name: FTM_type.h
+ *
+ * Description: Implementation of the FTM module
+ *              Target systems:           S32K144
+ *              Derivatives:              ARM M4F
+ *              Compiler:                 S32DS
+ *
+ *****************************************************************************/
+
+
 #ifndef FTM_H
 #define FTM_H
+
+
+/******************************************************************************
+ *  INCLUDES
+ *****************************************************************************/
 #include <stdint.h>
 #include "SCG_Type.h"
+
+
+/******************************************************************************
+ *  DEFINES & MACROS
+ *****************************************************************************/
 #define FTM0_BASE_ADDRESS 0x40038000
 #define FTM1_BASE_ADDRESS 0x40039000
 #define FTM2_BASE_ADDRESS 0x4003A000
@@ -10,6 +32,15 @@
 #define FTM5_BASE_ADDRESS 0x4006F000
 #define FTM6_BASE_ADDRESS 0x40070000
 #define FTM7_BASE_ADDRESS 0x40071000
+
+
+/******************************************************************************
+ *  TYPEDEFS
+ *****************************************************************************/
+
+/**
+* @brief typedef union with bitfield for FTM module
+*/
 typedef union 
 {
     uint32_t Register;
@@ -24,6 +55,11 @@ typedef union
         uint32_t FAULTIE : 1;
     }Fields;
 }Ftm_mode_t;
+
+
+/**
+* @brief typedef union with bitfield for status and control register of FTM
+*/
 typedef union 
 {
     uint32_t Register;
@@ -50,6 +86,10 @@ typedef union
     }Fields;  
 }Sc_t;
 
+
+/**
+* @brief typedef struct for FTM module
+*/
 typedef struct 
 {
     volatile Sc_t SC;
@@ -92,6 +132,11 @@ typedef struct
     volatile uint32_t MOD_MIRROR;
     volatile uint32_t CnV_MIRROR[8];
 }FTM_type;
+
+
+/**
+* @brief typedef enum for FTM channel module
+*/
 typedef enum {
     FTM_0,
     FTM_1,
@@ -102,6 +147,11 @@ typedef enum {
     FTM_6,
     FTM_7,
 }Ftm_modul_t;
+
+
+/**
+* @brief typedef struct for FTM prescale module
+*/
 typedef enum {
     Div_1,
     Div_2,
@@ -112,6 +162,10 @@ typedef enum {
     Div_64,
     Div_128
 }preScale_fmt_t;
+
+/******************************************************************************
+ *  DEFINES & MACROS
+ *****************************************************************************/
 #define FTM0 ((FTM_type*)(FTM0_BASE_ADDRESS))
 #define FTM1 ((FTM_type*)(FTM1_BASE_ADDRESS))
 #define FTM2 ((FTM_type*)(FTM2_BASE_ADDRESS))
@@ -120,7 +174,16 @@ typedef enum {
 #define FTM5 ((FTM_type*)(FTM5_BASE_ADDRESS))
 #define FTM6 ((FTM_type*)(FTM6_BASE_ADDRESS))
 #define FTM7 ((FTM_type*)(FTM7_BASE_ADDRESS))
+
+/******************************************************************************
+ *  GLOBAL FUNCTION
+ *****************************************************************************/
 void FTM_init(Ftm_modul_t,Source_div1_t,preScale_fmt_t, uint32_t);
 void Start_counter_FTM0(void);
 void Disable_counter_FTM0(void);
-#endif
+
+/**
+ * @}
+ */
+#endif /*FTM_type.h*/
+/*---------------------- End of File ----------------------------------------*/
