@@ -1,5 +1,5 @@
 /******************************************************************************
- * Project Name: FRESHER MCAL
+ * Project Name: Control LED with buttons
  * File Name: main.c
  *
  * Description: Implementation of the <module>
@@ -204,21 +204,21 @@ int main(void)
 
 	Config_LPIT_Chanel(
 		LPIT_Chanel0,	/* select LPIT channel 0 */
-		SOSCDIV2_CLK, 	/* chose clock source */
+		SOSCDIV2_CLK, 	/* chose clock source SOSC */
 		Enable,		    /* enable interrupt */
 		timeValue	    /* reset value */
 	);
 
 	Config_LPIT_Chanel(
 		LPIT_Chanel1,	/* select LPIT channel 1 */
-		SOSCDIV2_CLK, 	/* chose clock source */
+		SOSCDIV2_CLK, 	/* chose clock source SOSC */
 		Enable,		    /* enable interrupt */
 		92800	    	/* reset value */
 	);
 
 	Config_LPUART_Chanel(
 		CHN1,
-		FIRCDIV2_CLK,
+		FIRCDIV2_CLK,	/* chose clock source FIRC */
 		500, 			/* baurate = baud clock /(oversameling*500)----baurate: 9600|baud clock: 48Mh|oversameling: 10 */
 		ratio10,		/* oversameling */
 		One_Stop_Bit,	/* 1 bit stop */

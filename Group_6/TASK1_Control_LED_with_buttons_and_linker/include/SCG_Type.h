@@ -1,8 +1,48 @@
+/******************************************************************************
+ * Project Name: FRESHER  ASSIGNMENT
+ * File Name: SCG_Type.h
+ *
+ * Description: Implementation of the <module>
+ *              Target systems:           S32K<xxx>
+ *              Derivatives:              ARM<xxx>
+ *              Compiler:                 S32DS
+ *
+ *****************************************************************************/
+
+/**
+ *   @file       template.h
+ *   @version    V0.1
+ *   @brief      <version> <module> Driver
+ *   @addtogroup <module>_driver
+ */
+
 #ifndef SCG_H
 #define SCG_H
+/******************************************************************************
+ *  INCLUDES
+ *****************************************************************************/
 #include <stdint.h>
 #include "General.h"
+
+/******************************************************************************
+ *  DEFINES & MACROS
+ *****************************************************************************/
+/**
+ * @brief   Peripheral SCG base address.
+ */
 #define SCG_BASE_ADDRESS 0x40064000
+/**
+ * @brief   Peripheral SCG base pointer
+ */
+#define SCG ((SCG_Type*)(SCG_BASE_ADDRESS))
+
+
+/******************************************************************************
+ *  TYPEDEFS
+ *****************************************************************************/
+/**
+* @brief  Fieds of Clock Control Register.
+*/
 typedef union{
 	uint32_t Register;
 	struct{
@@ -15,6 +55,10 @@ typedef union{
 		uint32_t Reserved2 : 4;
 	}Fields;
 }CCR_t;
+
+/**
+* @brief  Fields of System PLL Divide Register.
+*/
 typedef union 
 {
 	uint32_t Register;
@@ -25,18 +69,30 @@ typedef union
 		uint32_t Reserved0 : 21;
 	}Fields;
 }DIV_t;
+
+/**
+* @brief  Choose clock source.
+*/
 typedef enum{
 	SOSCDIV2_CLK = 1,
 	SIRCDIV2_CLK = 2,
 	FIRCDIV2_CLK = 3,
 	SPLLDIV2_CLK = 6
 }Source;
+
+/**
+* @brief  Choose clock source.
+*/
 typedef enum{
 	FIRC,
 	SIRC,
 	SOSC,
 	SPLL
 }Clock_Source_t;
+
+/**
+* @brief  Configure prescale clockout.
+*/
 typedef enum{
 	Div_By_1= 1,
 	Div_By_2,
@@ -46,6 +102,10 @@ typedef enum{
 	Div_By_32,
 	Div_By_64
 }Divide_Options;
+
+/**
+* @brief  Configure prescale clockout SPLL.
+*/
 typedef enum{
 	Div1,
 	Div2,
@@ -56,6 +116,10 @@ typedef enum{
 	Div7,
 	Div8,
 }PreDiv_SPLL;
+
+/**
+* @brief  Select Multiply sys pll.
+*/
 typedef enum{
 	Multi16,
 	Multi17,
@@ -90,6 +154,10 @@ typedef enum{
 	Multi46,
 	Multi47,
 }Multiply_SPLL;
+
+/**
+* @brief  Fields of System PLL Configuration Register.
+*/
 typedef union{
 	uint32_t Register;
 	struct{
@@ -101,6 +169,10 @@ typedef union{
 		uint32_t Reserved2 : 11;
 	}Fields;
 }SPLL_cf;
+
+/**
+* @brief  SCG - Register Layout Typedef.
+*/
 typedef struct{
 	volatile uint32_t SCG_VERID;
 	volatile uint32_t SCG_PARAM;
@@ -127,9 +199,12 @@ typedef struct{
 	volatile DIV_t SCG_SPLLDIV;
 	volatile SPLL_cf SCG_SPLLCFG;
 }SCG_Type;
+
+/******************************************************************************
+ *  GLOBAL FUNCTION
+ *****************************************************************************/
 void SCG_Asyn_Peripheral_Sources(Source,Divide_Options);
 void Config_SOSC_CLK(void);
 void Config_SPLL_CLK(Clock_Source_t,PreDiv_SPLL,Multiply_SPLL);
 void Config_RCCR(Clock_Source_t,uint8_t,uint8_t,uint8_t);
-#define SCG ((SCG_Type*)(SCG_BASE_ADDRESS))
 #endif
