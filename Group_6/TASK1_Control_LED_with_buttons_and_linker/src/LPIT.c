@@ -61,9 +61,8 @@
  *  GLOBAL FUNCTION
  *****************************************************************************/
  /**
-  *   @brief      This initializes the global variable - l_CanConfig_ptr with
-  *                   the valid configuration pointer.
-  *                   Also sets the CAN driver Status as INITIALIZED.
+  *   @brief      This is config for LPIT module
+  *               The valid configuration variable.
   *
   *   @param[in]  LPIT_Chanel           chanel
   *   @param[in]  Source                clock_sorce
@@ -109,9 +108,8 @@ void Config_LPIT_Chanel
 }
 
 /**
- *   @brief      This initializes the global variable - l_CanConfig_ptr with
- *                   the valid configuration pointer.
- *                   Also sets the CAN driver Status as INITIALIZED.
+ *   @brief      This is config enable or disable for LPIT
+ *               The valid configuration variable.
  *
  *   @param[in]  LPIT_Chanel            chanel
  *   @param[in]  Enable_Disable         e_d

@@ -55,40 +55,20 @@
 /******************************************************************************
  *  LOCAL FUNCTION
  ******************************************************************************/
-/**
- *   @brief      This funciton shall be invoked to set up Baudrate of Controller
- *
- *   @param[in]  xxx1       xxxxxxxx    
- *   @param[in]  xxx2       xxxxxxxx
- *   @arg        XXX1       xxxxxxxx
- *   @arg        XXX2       xxxxxxxx  
- *
- *   @return     YYY/void   xxxxxxxx
- *   @retval     yyy1       xxxxxxxx
- *   @retval     yyy2       xxxxxxxx
- *
- *   @note       This function will be called by Can_Init and Can_SetBaudrate.
- *
-*/
 
 /******************************************************************************
  *  GLOBAL FUNCTION
  *****************************************************************************/
+
  /**
-  *   @brief      This initializes the global variable - l_CanConfig_ptr with
-  *                   the valid configuration pointer.
-  *                   Also sets the CAN driver Status as INITIALIZED.
+  *   @brief      Select clock source for LPIT
+  *				  The valid configuration variable.
   *
-  *   @param[in]  xxx1       xxxxxxxx
-  *   @param[in]  xxx2       xxxxxxxx
-  *   @arg        XXX21      xxxxxxxx
-  *   @arg        XXX22      xxxxxxxx
+  *   @param[in]  Source		source
   *
-  *   @return     YYY/void   xxxxxxxx
-  *   @retval     yyy1       xxxxxxxx
-  *   @retval     yyy2       xxxxxxxx
+  *   @return     Void			None
   *
-  *   @note       Driver should be in Un-Initialization.
+  *   @note       None.
   *
  */
 void PCC_LPIT_ClockSource(Source source){
@@ -100,14 +80,12 @@ void PCC_LPIT_ClockSource(Source source){
  *   @brief      Select clock source for LPUART
  *               The valid configuration variable.
  *
- *   @param[in]  LPUART_Chanel      ch
+ *   @param[in]  LPUART_Chanel		ch
  *   @param[in]  Source				source
  *
  *   @return	 Void				None
- *   @retval     yyy1				xxxxxxxx
- *   @retval     yyy2				xxxxxxxx
  *
- *   @note       None
+ *   @note       None.
  *
 */
 void PCC_LPUART_ClockSource(LPUART_Chanel ch,Source source){
@@ -135,8 +113,6 @@ void PCC_LPUART_ClockSource(LPUART_Chanel ch,Source source){
  *   @param[in]  Source				source
  *
  *   @return     Void				None
- *   @retval     yyy1       xxxxxxxx
- *   @retval     yyy2       xxxxxxxx
  *
  *   @note       None.
  *
