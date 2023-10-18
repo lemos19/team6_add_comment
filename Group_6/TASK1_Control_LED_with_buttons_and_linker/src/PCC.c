@@ -106,7 +106,7 @@ void PCC_LPUART_ClockSource(LPUART_Chanel ch,Source source){
 }
 
 /**
- *   @brief      Select clock source for LPUART
+ *   @brief      Select clock source for LPSPI
  *               The valid configuration variable.
  *
  *   @param[in]  LPSPI_Chanel		chanel
