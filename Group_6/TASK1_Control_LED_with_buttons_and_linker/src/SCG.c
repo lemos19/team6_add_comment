@@ -24,9 +24,7 @@
 /******************************************************************************
  *  DEFINES & MACROS
  *****************************************************************************/
-/**
- * @brief  xxxxxxxx1
- */
+
 
 /******************************************************************************
  *  EXTERN
@@ -36,9 +34,7 @@
 /******************************************************************************
  *  LOCAL TYPEDEFS
  *****************************************************************************/
-/**
-* @brief  Template TestType1 brief.
-*/
+
 
 /******************************************************************************
  *  LOCAL CONSTANTS
@@ -48,16 +44,12 @@
 /******************************************************************************
  *  LOCAL VARIABLES
  *****************************************************************************/
-/**
- * @brief  test brief1
- */
+
 
 /******************************************************************************
  *  GLOBAL VARIABLES
  *****************************************************************************/
-/**
- * @brief  test brief2
- */
+
 
 /******************************************************************************
  *  LOCAL FUNCTION PROTOTYPES
@@ -153,17 +145,20 @@ void Config_SPLL_CLK(Clock_Source_t Sosc_Firc,PreDiv_SPLL div,Multiply_SPLL mul)
  *   @param[in]  uint8_t            divBus1_16_minus1
  *   @param[in]  uint8_t            divSlow1_8_minus1
  * 
- *   @arg        CCR_t              tempRCCR
- *   @arg        tempRCCR           Register
  *
  *   @return     Void			    None
  *
- *   @note       None.
+ *   @note       Registr RCCR write only 32 bits one time.
  *
 */
 void Config_RCCR(Clock_Source_t source,uint8_t divCore1_16_minus1,uint8_t divBus1_16_minus1,uint8_t divSlow1_8_minus1){
+    /**
+     * @brief  this is a variable have datatype is CCR_t
+     * 
+     */
     CCR_t tempRCCR;
     tempRCCR.Register = 0;
+
     if (source == FIRC){
         tempRCCR.Fields.SCS = 3;
     }
