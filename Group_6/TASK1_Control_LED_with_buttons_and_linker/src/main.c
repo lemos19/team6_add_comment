@@ -112,15 +112,15 @@ void Blink_Led_Function(void)
 	{
 	case Red_led:
 		GPIOD->GPIO_PSOR = 0x18001; /* Turn off all LED */
-		GPIOD->GPIO_PCOR = (1u << Red_led);
+		GPIOD->GPIO_PCOR = (1u << Red_led);		/* Turn on Led Red */
 		break;
 	case Green_led:
 		GPIOD->GPIO_PSOR = 0x18001;
-		GPIOD->GPIO_PCOR = (1u << Green_led);
+		GPIOD->GPIO_PCOR = (1u << Green_led);	/* Turn on Led Green */
 		break;
 	case Blue_led:
 		GPIOD->GPIO_PSOR = 0x18001;
-		GPIOD->GPIO_PCOR = (1u << Blu_led);
+		GPIOD->GPIO_PCOR = (1u << Blue_led);	/* Turn on Led Blue */
 		break;
 	}
 }
@@ -157,7 +157,7 @@ void LPIT0_Ch0_IRQHandler(void)
  */
 void LPIT0_Ch1_IRQHandler(void)
 {
-	CLEAR_FLAG_LPIT_CHANEL(1)
+	CLEAR_FLAG_LPIT_CHANEL(1)		/* Clear flag interrupt Lpit */
 	sendCommand = Enable;
 }
 
@@ -219,11 +219,11 @@ int main(void)
 	Config_LPUART_Chanel(
 		CHN1,
 		FIRCDIV2_CLK,
-		500, /*baurate = baud clock /(oversameling*500)----baurate: 9600|baud clock: 48Mh|oversameling: 10*/
-		ratio10,
-		One_Stop_Bit,
-		_8BitData,
-		Disable /*disable parity bit*/
+		500, 			/* baurate = baud clock /(oversameling*500)----baurate: 9600|baud clock: 48Mh|oversameling: 10 */
+		ratio10,		/* oversameling */
+		One_Stop_Bit,	/* 1 bit stop */
+		_8BitData,		/* bit data */
+		Disable 		/*disable parity bit */
 	);
 	Enable_LPUART_Pin(Chn1_Tx_PTC7);		/* Config pin PTC6 as pin Tx */
 	Enable_LPUART_Pin(Chn1_Rx_PTC6);		/* Config pin PTC6 as pin RX */
