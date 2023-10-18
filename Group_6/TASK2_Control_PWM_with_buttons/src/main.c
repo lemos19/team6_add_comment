@@ -26,7 +26,6 @@
 #include "LPUART.h"
 #include <string.h>
 #include "LPSPI_Type.h"
-#include "ledMax7219.h"
 #include "SIM_Type.h"
 #include "FTM_type.h"
 #include <stdio.h>
@@ -42,7 +41,7 @@
 static char buffer[10];
 static int8_t buffer_index = 0;
 int Duti_cricle = 125;
-uint8_t SendMessage_Command = Disable;
+Enable_Disable SendMessage_Command = Disable;
 static char message[30];
 static char arr[] = "hello world!!\n";
 /******************************************************************************

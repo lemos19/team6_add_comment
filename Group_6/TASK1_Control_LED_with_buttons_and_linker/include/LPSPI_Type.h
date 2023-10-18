@@ -1,13 +1,33 @@
+/******************************************************************************
+ * Project Name: FRESHER  FRESHER ASSIGNMENT
+ * File Name: GPIO_Type.h
+ *
+ * Description: Implementation of the LPSPI modul
+ *              Target systems:           S32K144
+ *              Derivatives:              ARM cortex M4	
+ *              Compiler:                 S32DS
+ *
+ *****************************************************************************/
 #ifndef LPSPI_H
 #define LPSPI_H
+/******************************************************************************
+ *  INCLUDES
+ *****************************************************************************/
 #include <stdint.h>
 #include "General.h"
 #include "PCC_Type.h"
-#define Framesz8_minus1 uint8_t
-#define SCKDivider_plus2 uint8_t
+/******************************************************************************
+ *  DEFINES & MACROS
+ *****************************************************************************/
 #define LPSPI0_BASE_ADD 0x4002C000
 #define LPSPI1_BASE_ADD 0x4002D000
 #define LPSPI2_BASE_ADD 0x4002E000
+#define LPSPI0 ((LPSPI_Type*)(LPSPI0_BASE_ADD))
+#define LPSPI1 ((LPSPI_Type*)(LPSPI1_BASE_ADD))
+#define LPSPI2 ((LPSPI_Type*)(LPSPI2_BASE_ADD))
+/******************************************************************************
+ *  TYPEDEFS
+ *****************************************************************************/
 typedef enum{
     LPSPI0_PCS0_PTB0,LPSPI0_PCS0_PTB5,
     LPSPI0_SCK_PTB2,LPSPI0_SCK_PTE0,LPSPI0_SCK_PTD15,
@@ -23,7 +43,7 @@ typedef enum{
     LPSPI2_SCK_PTE15,LPSPI2_SCK_PTC15,
     LPSPI2_SIN_PTE16,LPSPI2_SIN_PTC0,
     LPSPI2_SOUT_PTA8,LPSPI2_SOUT_PTC1
-}LPSPT_Chanel_Mode_Pin;
+}LPSPT_Chanel_Mode_Pin; // use for define all the pin relative of modul LPSPI in s32k144
 typedef union{
     uint32_t Register;
     struct {
@@ -42,7 +62,7 @@ typedef union{
         uint32_t CPHA : 1;
         uint32_t CPOL : 1;
     }Fields;   
-}TCR_t;
+}TCR_t; // use for define the fields of TCR register
 
 typedef union{
     uint32_t Register;
@@ -98,7 +118,7 @@ typedef union{
        uint32_t PCSCFG : 1;
        uint32_t Reserved3 : 4;
     }Fields;
-}CFGR1_t;
+}CFGR1_t; // use for define the fields of CFGR1 register 
 typedef enum{
     Transmit_Data_Interrupt,
     Receive_Data_Interrupt,
@@ -108,7 +128,7 @@ typedef enum{
     Transmit_Error_Interrupt,
     Receive_Error_Interrupt,
     Data_Match_Interrupt 
-}LPSPI_Interrupt;
+}LPSPI_Interrupt; // define the name types of interrupt of LPSPI modul
 typedef union{
     uint32_t Register;
     struct{
@@ -123,7 +143,7 @@ typedef union{
         uint32_t DMIE : 1;
         uint32_t Reserved1 : 18;
     }Fields;
-}LPSPI_IER_t;
+}LPSPI_IER_t; // use for define the fields of IER register
 typedef struct {
     volatile uint32_t VERID;
     volatile uint32_t PARAM;
@@ -147,19 +167,23 @@ typedef struct {
     volatile uint32_t Reserved4[2];
     volatile uint32_t RSR;
     volatile uint32_t RDR;
-}LPSPI_Type;
-void Config_LPSPI_Chanel(LPSPI_Chanel,
-Source,
-PRESCALE_devide,
-CPOL,
-CPHA,
-uint8_t,
-Peripheral_chip_select,
-uint8_t,
-LPSPI_mode);
-void Enable_LPSPI_Pin(LPSPT_Chanel_Mode_Pin);
-void Config_LPSPI_Interrupt(LPSPI_Chanel,LPSPI_Interrupt);
-#define LPSPI0 ((LPSPI_Type*)(LPSPI0_BASE_ADD))
-#define LPSPI1 ((LPSPI_Type*)(LPSPI1_BASE_ADD))
-#define LPSPI2 ((LPSPI_Type*)(LPSPI2_BASE_ADD))
+}LPSPI_Type; // this struct define memory layout for LPSPI modul
+/******************************************************************************
+ *  FUNCTION PROTOTYPES
+ *****************************************************************************/
+void Config_LPSPI_Chanel
+(
+    LPSPI_Chanel,
+    Source,
+    PRESCALE_devide,
+    CPOL,
+    CPHA,
+    uint8_t, /*Framesz8*/
+    Peripheral_chip_select,
+    uint8_t, /*SCK Divider*/
+    LPSPI_mode
+);
+void Enable_LPSPI_Pin(LPSPT_Chanel_Mode_Pin); /*this funtion setting the particurlar pin muxing mode to LPSPI*/
+void Config_LPSPI_Interrupt(LPSPI_Chanel,LPSPI_Interrupt);/*this funtion use for enable a specific type of interrupt of LPSPI channel*/
 #endif
+/*---------------------- End of File ----------------------------------------*/

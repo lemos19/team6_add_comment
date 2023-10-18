@@ -1,12 +1,37 @@
+/******************************************************************************
+ * Project Name: FRESHER  MCAL
+ * File Name: LPUART.h
+ *
+ * Description: Implementation of the low power uart modul
+ *              Target systems:           S32K144
+ *              Derivatives:              ARM cortex M4
+ *              Compiler:                 S32DS
+ *
+ *****************************************************************************/
 #ifndef LPUART_H
 #define LPUART_H
+/******************************************************************************
+ *  INCLUDES
+ *****************************************************************************/
 #include <stdint.h>
 #include "General.h"
 #include "PCC_Type.h"
+/******************************************************************************
+ *  DEFINES & MACROS
+ *****************************************************************************/
 #define LPUART0_BASE_ADD 0x4006A000
 #define LPUART1_BASE_ADD 0x4006B000
 #define LPUART2_BASE_ADD 0x4006C000
-//muxing value s32k144
+#define LPUART0 ((LPUART_Type*)(LPUART0_BASE_ADD))
+#define LPUART1 ((LPUART_Type*)(LPUART1_BASE_ADD))
+#define LPUART2 ((LPUART_Type*)(LPUART2_BASE_ADD))
+/******************************************************************************
+ *  TYPEDEFS
+ *****************************************************************************/
+
+/**
+ * @brief use for define all the pin relative of modul LPUART in s32k144
+ */
 typedef enum{
     Chn0_CTS_PTC8 ,
     Chn0_CTS_PTA0 ,
@@ -35,10 +60,19 @@ typedef enum{
     Chn2_Tx_PTE12 ,
     Chn2_Tx_PTA9 
 }Chanel_Mode_Pin;
+
+/**
+ * @brief  define mode for config stopbit
+ */ 
 typedef enum{
     One_Stop_Bit,
     Two_Stop_Bit
 }StopBit_Num;
+
+
+/**
+ * @brief  ratio value
+ */ 
 typedef enum{
     ratio4_BOTHEDGE = 3,
     ratio5_BOTHEDGE,
@@ -69,7 +103,12 @@ typedef enum{
     ratio30,
     ratio31,
     ratio32
-}Oversampling_Ratio;
+}Oversampling_Ratio; 
+
+
+/**
+ * @brief  define fields of CTRL register
+ */
 typedef union{
     uint32_t Register;
     struct {
@@ -103,7 +142,10 @@ typedef union{
        uint32_t R9T8 : 1;
        uint32_t R8T9 : 1;
     }Fields;
-}CTRL_t;
+}CTRL_t; 
+/**
+ * @brief  define fields of BAUD register
+ */
 typedef union
 {
     uint32_t Register;
@@ -124,7 +166,11 @@ typedef union
         uint32_t MAEN2 : 1;
         uint32_t MAEN1 : 1;
     }Fields;
-}BAUD_t;
+}BAUD_t; 
+
+/**
+ * @brief   define fields of DATA register
+ */
 typedef union{
     uint32_t Register;
     struct {
@@ -138,10 +184,18 @@ typedef union{
         uint32_t Reserved0 : 16;
     }Fields;
 }DATA_t;
+
+/**
+ * @brief  
+ */
 typedef enum{
     _8BitData,
     _9BitData
 }Character_Num;
+
+/**
+ * @brief  define the types of interrupt in LPUART modul
+ */
 typedef enum{
     Overrun_Interrupt,
     Noise_Error_Interrupt,
@@ -151,7 +205,10 @@ typedef enum{
     Transmission_Complete_Interrupt,
     Receiver_Interrupt,
     Idle_Line_Interrupt 
-}LPUART_Interrupts;
+}LPUART_Interrupts; 
+/**
+ * @brief  xxxxxxxx2.
+ */
 typedef struct{
     volatile uint32_t VERID;
     volatile uint32_t PARAM;
@@ -159,32 +216,35 @@ typedef struct{
     volatile uint32_t PINCFG;
     volatile BAUD_t BAUD;
     volatile uint32_t STAT;
-    volatile CTRL_t CTRL;
+    volatile DATA_t CTRL;
     volatile DATA_t DATA;
     volatile uint32_t MATCH;
     volatile uint32_t MODIR;
     volatile uint32_t FIFO;
     volatile uint32_t WATER;
-}LPUART_Type;
-
-#define LPUART0 ((LPUART_Type*)(LPUART0_BASE_ADD))
-#define LPUART1 ((LPUART_Type*)(LPUART1_BASE_ADD))
-#define LPUART2 ((LPUART_Type*)(LPUART2_BASE_ADD))
-void Config_LPUART_Chanel(LPUART_Chanel Chanel,
-Source source,
-uint16_t baud_rate_modulo_divisor,
-Oversampling_Ratio oversampling_ratio,
-StopBit_Num numS,
-Character_Num numD,
-Enable_Disable parity);
-void Enable_LPUART_Interrupts(LPUART_Chanel,LPUART_Interrupts);
-void Enable_LPUART_Pin(Chanel_Mode_Pin Chnn_mode_pin);
-void TransmitData(LPUART_Chanel,uint16_t);
-uint16_t ReceiveData(LPUART_Chanel);
+}LPUART_Type; // define the memmory layout of LPUART modul
+/******************************************************************************
+ *  FUNCTION PROTOTYPES
+ *****************************************************************************/
+void Config_LPUART_Chanel /*this funtion use for config a channel in LPUART modul*/
+(
+    LPUART_Chanel Chanel,
+    Source source,
+    uint16_t baud_rate_modulo_divisor,
+    Oversampling_Ratio oversampling_ratio,
+    StopBit_Num numS,
+    Character_Num numD,
+    Enable_Disable parity
+);
+void Enable_LPUART_Interrupts(LPUART_Chanel,LPUART_Interrupts); /*this funtion use for enable particurlar interrupt*/
+void Enable_LPUART_Pin(Chanel_Mode_Pin Chnn_mode_pin); /*this funtion use for config pin muxing mode to LPUART modul*/
+void TransmitData(LPUART_Chanel,uint16_t); /*this funtion use for tranmist data via an specific channel*/
+uint16_t ReceiveData(LPUART_Chanel); /* this funtion return the values recive data*/
 void Enable_TransmitData_Chanel(LPUART_Chanel);
 void Disable_TransmitData_Chanel(LPUART_Chanel);
 void Enable_ReceiveData_Chanel(LPUART_Chanel);
 void Disable_ReceiveData_Chanel(LPUART_Chanel);
-void Send_Message(char*);
+void Send_Message(char*);/*this funtion use for tranmist data via Channel 1*/
 void Send_CurrentMode_Message(Mode_t);
 #endif
+/*---------------------- End of File ----------------------------------------*/

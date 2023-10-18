@@ -1,19 +1,44 @@
+/******************************************************************************
+ * Project Name: FRESHER  MCAL
+ * File Name: PCC_Type.h
+ *
+ * Description: Implementation of the PCC modul
+ *              Target systems:           S32K144
+ *              Derivatives:              ARM cortex M4
+ *              Compiler:                 S32DS
+ *
+ *****************************************************************************/
 #ifndef PCC_TYPE_H
 #define PCC_TYPE_H
-// Peripheral Clock Controller
+/******************************************************************************
+ *  INCLUDES
+ *****************************************************************************/
 #include <stdint.h>
 #include "SCG_Type.h"
+/******************************************************************************
+ *  DEFINES & MACROS
+ *****************************************************************************/
 #define PCC_BASE_ADDRESS 0x40065000
+#define PCC ((PCC_Type*)(PCC_BASE_ADDRESS+0x80))
+/**
+ * @brief  define channel of UART modul
+ */
 typedef enum{
 	CHN0,
 	CHN1,
 	CHN2
 }LPUART_Chanel;
+/**
+ * @brief  define channel of LPSPI modul
+ */
 typedef enum{
     LPSPI_Chanel0,
     LPSPI_Chanel1,
     LPSPI_Chanel2,
 }LPSPI_Chanel;
+/**
+ * @brief  define bit fields for PCC register
+ */
 typedef union{
 	uint32_t Resigter;
 	struct{
@@ -24,6 +49,9 @@ typedef union{
 		uint32_t Reserved1 : 1;
 	}Fields;
 }LPIT_T;
+/**
+ * @brief  define memmory layout for modul PCC
+ */
 typedef struct PCC_Type{
 	volatile uint32_t PCC_FTFC;
 	volatile uint32_t PCC_DMAMUX;
@@ -83,8 +111,8 @@ typedef struct PCC_Type{
 	volatile uint32_t PCC_Reserved16[2];
 	volatile uint32_t PCC_ENET;
 }PCC_Type;
-void PCC_LPSPI_ClockSource(LPSPI_Chanel,Source);
-void PCC_LPIT_ClockSource(Source);
-void PCC_LPUART_ClockSource(LPUART_Chanel,Source);
-#define PCC ((PCC_Type*)(PCC_BASE_ADDRESS+0x80))
+void PCC_LPSPI_ClockSource(LPSPI_Chanel,Source); /*this funtion select clock source for modul LPSPI*/
+void PCC_LPIT_ClockSource(Source); /*this funtion select clock source for modul LPIT*/
+void PCC_LPUART_ClockSource(LPUART_Chanel,Source); /*this funtion select clock source for modul LPUART*/
 #endif
+/*---------------------- End of File ----------------------------------------*/

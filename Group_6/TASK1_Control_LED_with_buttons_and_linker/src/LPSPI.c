@@ -9,9 +9,9 @@ void Config_LPSPI_Chanel
     PRESCALE_devide div,
     CPOL cpol,
     CPHA cpha,
-    Framesz8_minus1 Framesz8_31_minus1,
+    uint8_t Framesz8_31_minus1,
     Peripheral_chip_select pcs,
-    SCKDivider_plus2 SCK_Divider_plus2,
+    uint8_t SCK_Divider_plus2,
     LPSPI_mode mode
 )
 {

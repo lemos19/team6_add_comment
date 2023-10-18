@@ -26,7 +26,6 @@
 #include "LPUART.h"
 #include <string.h>
 #include "LPSPI_Type.h"
-#include "ledMax7219.h"
 #include "SIM_Type.h"
 #include "string.h"
 #include <math.h>
@@ -72,7 +71,7 @@ void Blink_Led_Function(void);
  *****************************************************************************/
 void Blink_Led_Function() __attribute__((section(".flash_blinkled")));
 uint8_t counter __attribute__((section(".new_data")));
-uint8_t sendCommand __attribute__((section(".new_data")));
+Enable_Disable sendCommand __attribute__((section(".new_data")));
 /******************************************************************************
  *  FUNCTION DECLARATION
  *****************************************************************************/
@@ -121,11 +120,10 @@ int main(void)
 		Disable /*disable parity bit*/
 	);
 
-	Enable_LPUART_Interrupts(CHN1, Receiver_Interrupt);
-	NVIC_Config_Interrup_Modul(Lpuart1, Enable);
+	
 	Enable_LPUART_Pin(Chn1_Tx_PTC7);
 	Enable_LPUART_Pin(Chn1_Rx_PTC6);
-	Enable_ReceiveData_Chanel(CHN1);
+
 
 	Send_Message(&messageHello[0]);
 	ENABLE_LPIT_CHANEL(0)
